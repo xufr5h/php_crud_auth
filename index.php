@@ -1,3 +1,41 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  // Including the database connection
+  require_once 'database.php';
+  // get form data
+  $username = trim($_POST['username']);
+  $email = trim($_POST['email']);
+  $password = trim($_POST['password']);
+  $confirm_password = trim($_POST['confirm_password']);
+  // validate form data
+  if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
+    $error = 'All fields are required';
+  } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $error = 'Invalid email format';
+  } else if ($password !== $confirm_password) {
+    $error = 'Passwords do not match';
+  } else {
+    $conn = new Database();
+    // checking if the email address already exists
+    $sql = "SELECT * FROM users WHERE email = ?";
+    $count = $conn->countRows($sql, [$email]);
+    if ($count>0) {
+      $error = "This email is already registered";
+    } else {
+      // Inserting new user into database 
+      $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+      $hashed_password = sha1(md5($password)); // hashing the password
+      $returnId = $conn->create($sql, [$username, $email, $hashed_password]);
+      if ($returnId) {
+        header('Location: sign_in.php');
+        exit();
+      } else {
+        $error = "An error occurred. Please try again";
+    }
+  }
+}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
