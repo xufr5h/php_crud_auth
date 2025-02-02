@@ -59,6 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <input type="password" name="confirm_password" id="confirm_password" required> <br>
       <button type="submit" name="submit">Sign Up</button> <br>
       <p>Already have an account? <a href="sign_in.php">Sign In</a></p>
+      <!-- Display error messsage -->
+       <?php
+       if (!empty($error)) : ?> 
+        <p style="color:red"><?php echo $error; ?></p>
+       <?php endif; ?>
       </form>
   </div>
 </body>

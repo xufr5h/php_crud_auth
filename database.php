@@ -39,4 +39,9 @@ public function create ($query, $params = []) {
   $stmt->execute($params);
   return $this->conn->lastInsertId(); //returns the ID of the last inserted row or sequence value
 }
+public function select ($query, $params = []) {
+  $stmt = $this->conn->prepare($query);
+  $stmt->execute($params);
+  return $stmt->fetchAll(); //returns an array containing all of the result set rows
+}
 }
