@@ -1,7 +1,7 @@
 <?php
 class Database{
   private $host = "localhost";
-  private $db_name = "php_crud";
+  private $db_name = "crud_database";
   private $username = "root";
   private $password = "";
   private $port = 3307;
@@ -44,4 +44,11 @@ public function select ($query, $params = []) {
   $stmt->execute($params);
   return $stmt->fetchAll(); //returns an array containing all of the result set rows
 }
+
+public function delete ($query, $params = []) {
+  $stmt = $this->conn->prepare($query);
+  $stmt->execute($params);
+  return $stmt->rowCount(); //returns the number of rows affected by the last SQL statement
+}
+
 }
