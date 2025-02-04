@@ -51,4 +51,9 @@ public function delete ($query, $params = []) {
   return $stmt->rowCount(); //returns the number of rows affected by the last SQL statement
 }
 
+public function update ($query, $params = []) {
+  $stmt = $this->conn->prepare($query);
+  $stmt->execute($params);
+  return $stmt->rowCount(); //returns the number of rows affected by the last SQL statement
+}
 }

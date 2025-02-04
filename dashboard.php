@@ -80,7 +80,6 @@ foreach ($finance as $finance):
 </a
 ><div class="user-info">
   <p class="d-line">Logged in as: <?=$_SESSION['user_username'] ?? 'N/A' ?></p>
-  <a href="logout.php" class="btn btn-secondary btn-sm d-line">logout</a>
 </div>
 <script>
   // Capture the delete button click event to set the ID dynamically
